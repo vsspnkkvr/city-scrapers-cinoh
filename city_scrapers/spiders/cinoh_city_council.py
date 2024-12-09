@@ -13,10 +13,8 @@ class CinohCityCouncilSpider(LegistarSpider):
 
     def parse_legistar(self, response):
         """
-        `parse_legistar` should always `yield` Meeting items.
-
-        Change the `_parse_title`, `_parse_start`, etc methods to fit your scraping
-        needs.
+        Oftentimes, the columns: meeting details, agenda, minutes, and video are left blank on the calander
+        but when they are, they are in the form of links. 
         """
         for obj in response:
             meeting = Meeting(
@@ -54,17 +52,17 @@ class CinohCityCouncilSpider(LegistarSpider):
         links = []
         if obj.get("Name"):
             links.append({"title": "meeting page", "href": obj["Name"]["url"]})
-        elif obj.get("iCalendar"):
+        if obj.get("iCalendar"):
             links.append({"title": "iCalendar", "href": obj["iCalendar"]["url"]})
-        elif obj.get("Meeting Details"):
+        if obj.get("Meeting Details"):
             links.append({"title": "Meeting Details", "href": obj["Meeting Details"]["url"]})
-        elif obj.get("Agenda"):
+        if obj.get("Agenda"):
             links.append({"title": "Agenda", "href": obj["Agenda"]["url"]})
-        elif obj.get("Agenda Packet"):
+        if obj.get("Agenda Packet"):
             links.append({"title": "Agenda Packet", "href": obj["Agenda Packet"]["url"]})
-        elif obj.get("Minutes"):
+        if obj.get("Minutes"):
             links.append({"title": "Minutes", "href": obj["Minutes"]["url"]})
-        elif obj.get("Video"):
+        if obj.get("Video"):
             links.append({"title": "Video", "href": obj["Video"]["url"]})
         return links
 

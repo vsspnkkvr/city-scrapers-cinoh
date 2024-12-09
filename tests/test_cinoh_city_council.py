@@ -68,6 +68,7 @@ def test_links():
 
 def test_classification():
     assert parsed_items[0]["classification"] == CITY_COUNCIL
+    assert parsed_items[1]["classification"] == COMMITTEE
 
 
 @pytest.mark.parametrize("item", parsed_items)
