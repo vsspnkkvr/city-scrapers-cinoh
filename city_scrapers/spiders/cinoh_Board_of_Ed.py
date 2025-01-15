@@ -1,6 +1,6 @@
 from datetime import datetime
 import scrapy
-from city_scrapers_core.constants import COMMITTEE, NOT_CLASSIFIED, BOARD
+from city_scrapers_core.constants import COMMITTEE, NOT_CLASSIFIED, BOARD, COMMISSION
 from city_scrapers_core.items import Meeting
 from city_scrapers_core.spiders import CityScrapersSpider
 from dateutil.parser import parse
@@ -34,6 +34,8 @@ class CinohBoardOfEdSpider(CityScrapersSpider):
             "address": "2651 Burnet Avenue, Mary A. Ronan Education Center Room 111, Cincinnati, OH 45219",
         }
 
+        meeting_source = "https://go.boarddocs.com/oh/cps/Board.nsf/Public#"
+
         for item in data:
             
             date = item.get("numberdate")
@@ -54,7 +56,7 @@ class CinohBoardOfEdSpider(CityScrapersSpider):
                 time_notes="",
                 location=location,
                 links=self._parse_links(item),
-                source=self._parse_source(response),
+                source=meeting_source,
             )
 
             meeting["status"] = self._get_status(meeting)
@@ -67,6 +69,8 @@ class CinohBoardOfEdSpider(CityScrapersSpider):
             return COMMITTEE
         elif "Board" in item["name"]:
             return BOARD
+        elif "Commission" in item["name"]:
+            return COMMISSION
         else:
             return NOT_CLASSIFIED
 
@@ -79,6 +83,4 @@ class CinohBoardOfEdSpider(CityScrapersSpider):
         )
         return [{"title": "Agenda and Zoom Meeting Link", "href": href}]
 
-    def _parse_source(self, response):
-        """Generate source."""
-        return "https://go.boarddocs.com/oh/cps/Board.nsf/Public#"
+
