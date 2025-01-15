@@ -56,19 +56,38 @@ class CinohCityCouncilSpider(LegistarSpider):
     
     def _parse_links(self, obj):
         
+        links = []
+
         if obj.get("Name"):
-            return [{"title": "meeting page", "href": obj["Name"]["url"]}]
+            links.append({"title": "meeting page", "href": obj["Name"]["url"]})
+
         if obj.get("iCalendar"):
-            return [{"title": "iCalendar", "href": obj["iCalendar"]["url"]}]
-        if obj.get("Meeting Details"):
-            return [{"title": "Meeting Details", "href": obj["Meeting Details"]["url"]}]
-        if obj.get("Agenda"):
-            return [{"title": "Agenda", "href": obj["Agenda"]["url"]}]
-        if obj.get("Agenda Packet"):
-            return [{"title": "Agenda Packet", "href": obj["Agenda Packet"]["url"]}]
-        if obj.get("Minutes"):
-            return [{"title": "Minutes", "href": obj["Minutes"]["url"]}]
-        if obj.get("Video"):
-            return [{"title": "Video", "href": obj["Video"]["url"]}]
+            links.append({"title": "iCalendar", "href": obj["iCalendar"]["url"]})
+
+        if obj.get("Meeting Details") == "Meeting\u00a0details":
+            links.append({"title": "Meeting Details", "href": "Not Available"})
+        else:
+            links.append({"title": "Meeting Details", "href": obj["Meeting Details"]["url"]})
+
+        if obj.get("Agenda") == "Not\u00a0available":
+            links.append({"title": "Agenda", "href": "Not Available"})
+        else:
+            links.append({"title": "Agenda", "href": obj["Agenda"]["url"]})
+
+        if obj.get("Agenda Packet") == "Not\u00a0available":
+            links.append({"title": "Agenda Packet", "href": "Not Available"})
+        else:
+            links.append({"title": "Agenda Packet", "href": obj["Agenda Packet"]["url"]})
+
+        if obj.get("Minutes") == "Not\u00a0available":
+            links.append({"title": "Minutes", "href": "Not Available"})
+        else:
+            links.append({"title": "Minutes", "href": obj["Minutes"]["url"]})
+
+        if obj.get("Video") == "Not\u00a0available":
+            links.append({"title": "Video", "href": "Not Available"})
+        else:
+            links.append({"title": "Video", "href": obj["Video"]["url"]})
         
+        return links
 
