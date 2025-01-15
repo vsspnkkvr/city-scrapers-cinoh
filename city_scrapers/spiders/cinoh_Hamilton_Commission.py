@@ -9,7 +9,7 @@ from urllib.parse import urljoin
 class CinohHamiltonCommissionSpider(CityScrapersSpider):
     name = "cinoh_Hamilton_Commission"
     agency = "Hamilton County Board of Commissioners"
-    timezone = "America/Chicago"
+    timezone = "America/New_York"
     start_urls = ["https://hcjfsonbase.jfs.hamilton-co.org/OnBaseAgendaOnline"]
 
     def parse(self, response):
@@ -57,7 +57,7 @@ class CinohHamiltonCommissionSpider(CityScrapersSpider):
         url_second_half = item.css("::attr(href)").get()
         url = urljoin(url_first_half, url_second_half)
         if url == "https://hcjfsonbase.jfs.hamilton-co.org":
-            return [{"title": "No links included", "href": "N/A"}]
+            return []
         else:
             return [{"title": "Agenda, Notes, and Media", "href": url}]
        

@@ -62,10 +62,7 @@ def test_source():
 
 
 def test_links():
-    assert parsed_items[0]["links"] == [{
-        "href": "N/A",
-        "title": "No links included"
-    }]
+    assert parsed_items[0]["links"] == []
     assert parsed_items[20]["links"] == [{
         "href": "https://hcjfsonbase.jfs.hamilton-co.org/OnBaseAgendaOnline/Meetings/ViewMeeting?id=2597&doctype=1",
         "title": "Agenda, Notes, and Media"
