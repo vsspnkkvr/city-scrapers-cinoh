@@ -1,6 +1,8 @@
 from city_scrapers_core.constants import CITY_COUNCIL, COMMITTEE
 from city_scrapers_core.items import Meeting
 from city_scrapers_core.spiders import LegistarSpider
+from datetime import datetime
+from dateutil.parser import parse
 
 
 class CinohCityCouncilSpider(LegistarSpider):
@@ -14,7 +16,7 @@ class CinohCityCouncilSpider(LegistarSpider):
         Parse upcoming and past meetings from the Cincinnati City Council meetings table.
 
         Oftentimes, the columns: meeting details, agenda, minutes, and video are left blank on the calander
-        but when they are, they are in the form of links. 
+        but when they are, they are in the form of links.
         """
         for obj in response:
             meeting = Meeting(
@@ -40,22 +42,28 @@ class CinohCityCouncilSpider(LegistarSpider):
             return CITY_COUNCIL
         else:
             return COMMITTEE
-    
+
     def _parse_status(self, obj):
-        if obj["Meeting Location"] == "Council Chambers, Room 300 NOTICE OF CANCELLATION":
+
+        date = obj["Meeting Date"]
+        parsed_date = parse(date, fuzzy=True)
+
+        if (
+            obj["Meeting Location"]
+            == "Council Chambers, Room 300 NOTICE OF CANCELLATION"
+        ):
             return "cancelled"
+        elif parsed_date < datetime.today():
+            return "passed"
         else:
             return "tentative"
 
     def _parse_location(self, obj):
         room = obj["Meeting Location"]
-        return {
-            "address": "801 Plum St. Cincinnati, OH 45202",
-            "name": f"{room}"
-        }
-    
+        return {"address": "801 Plum St. Cincinnati, OH 45202", "name": f"{room}"}
+
     def _parse_links(self, obj):
-        
+
         links = []
 
         if obj.get("Name"):
@@ -64,30 +72,23 @@ class CinohCityCouncilSpider(LegistarSpider):
         if obj.get("iCalendar"):
             links.append({"title": "iCalendar", "href": obj["iCalendar"]["url"]})
 
-        if obj.get("Meeting Details") == "Meeting\u00a0details":
-            links.append({"title": "Meeting Details", "href": "Not Available"})
-        else:
-            links.append({"title": "Meeting Details", "href": obj["Meeting Details"]["url"]})
+        if not obj.get("Meeting Details") == "Meeting\u00a0details":
+            links.append(
+                {"title": "Meeting Details", "href": obj["Meeting Details"]["url"]}
+            )
 
-        if obj.get("Agenda") == "Not\u00a0available":
-            links.append({"title": "Agenda", "href": "Not Available"})
-        else:
+        if not obj.get("Agenda") == "Not\u00a0available":
             links.append({"title": "Agenda", "href": obj["Agenda"]["url"]})
 
-        if obj.get("Agenda Packet") == "Not\u00a0available":
-            links.append({"title": "Agenda Packet", "href": "Not Available"})
-        else:
-            links.append({"title": "Agenda Packet", "href": obj["Agenda Packet"]["url"]})
+        if not obj.get("Agenda Packet") == "Not\u00a0available":
+            links.append(
+                {"title": "Agenda Packet", "href": obj["Agenda Packet"]["url"]}
+            )
 
-        if obj.get("Minutes") == "Not\u00a0available":
-            links.append({"title": "Minutes", "href": "Not Available"})
-        else:
+        if not obj.get("Minutes") == "Not\u00a0available":
             links.append({"title": "Minutes", "href": obj["Minutes"]["url"]})
 
-        if obj.get("Video") == "Not\u00a0available":
-            links.append({"title": "Video", "href": "Not Available"})
-        else:
+        if not obj.get("Video") == "Not\u00a0available":
             links.append({"title": "Video", "href": obj["Video"]["url"]})
-        
-        return links
 
+        return links
