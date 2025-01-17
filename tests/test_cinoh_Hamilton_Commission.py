@@ -6,7 +6,9 @@ from city_scrapers_core.constants import COMMISSION
 from city_scrapers_core.utils import file_response
 from freezegun import freeze_time
 
-from city_scrapers.spiders.cinoh_Hamilton_Commission import CinohHamiltonCommissionSpider
+from city_scrapers.spiders.cinoh_Hamilton_Commission import (
+    CinohHamiltonCommissionSpider,
+)
 
 test_response = file_response(
     join(dirname(__file__), "files", "cinoh_Hamilton_Commission.html"),
