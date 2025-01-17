@@ -61,4 +61,3 @@ class CinohHamiltonCommissionSpider(CityScrapersSpider):
             return []
         else:
             return [{"title": "Agenda, Notes, and Media", "href": url}]
-       
