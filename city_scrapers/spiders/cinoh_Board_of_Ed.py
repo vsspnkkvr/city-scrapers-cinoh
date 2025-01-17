@@ -1,6 +1,7 @@
 from datetime import datetime
+
 import scrapy
-from city_scrapers_core.constants import COMMITTEE, NOT_CLASSIFIED, BOARD, COMMISSION
+from city_scrapers_core.constants import BOARD, COMMISSION, COMMITTEE, NOT_CLASSIFIED
 from city_scrapers_core.items import Meeting
 from city_scrapers_core.spiders import CityScrapersSpider
 from dateutil.parser import parse
@@ -25,8 +26,8 @@ class CinohBoardOfEdSpider(CityScrapersSpider):
         form_data = {"current_committee_id": self.committee_id}
         yield scrapy.FormRequest(url, formdata=form_data, callback=self.parse)
 
-    def parse(self, response):  
-        lower_limit = datetime.now() - relativedelta(months=12)    
+    def parse(self, response):
+        lower_limit = datetime.now() - relativedelta(months=12)
         data = response.json()
         # hardcoded location
         location = {
@@ -37,14 +38,13 @@ class CinohBoardOfEdSpider(CityScrapersSpider):
         meeting_source = "https://go.boarddocs.com/oh/cps/Board.nsf/Public#"
 
         for item in data:
-            
+
             date = item.get("numberdate")
             if date is None:
                 continue
             meeting_date = parse(date)
             if meeting_date < lower_limit:
                 continue
-
 
             meeting = Meeting(
                 title=item["name"],
@@ -75,12 +75,10 @@ class CinohBoardOfEdSpider(CityScrapersSpider):
             return NOT_CLASSIFIED
 
     def _parse_links(self, item):
-        # each link is to the full meeting agenda and also contains the meeting's Zoom link  
+        # each link is to the full meeting agenda and also contains the meeting's Zoom link
         """Generate links."""
         href = (
             f"https://go.boarddocs.com/oh/cps/Board.nsf/Download-AgendaDetailed?"
             f"open&id={item['unique']}&current_committee_id={self.committee_id}"
         )
         return [{"title": "Agenda and Zoom Meeting Link", "href": href}]
-
-
