@@ -1,4 +1,3 @@
-from datetime import datetime
 from urllib.parse import urljoin
 
 from city_scrapers_core.constants import COMMISSION
@@ -15,7 +14,8 @@ class CinohHamiltonCommissionSpider(CityScrapersSpider):
 
     def parse(self, response):
         """
-        Parse upcoming and past meetings from the Hamilton County Board of Commissioners meetings table.
+        Parse upcoming and past meetings from the
+        Hamilton County Board of Commissioners meetings table.
         """
         location = {
             "name": "Todd B. Portune Center for County Government",
@@ -51,7 +51,8 @@ class CinohHamiltonCommissionSpider(CityScrapersSpider):
         date = item.css("td::text")[2].get()
         return parse(date, fuzzy=True)
 
-    # all three link types on the table--Agenda, Minutes, and View Media--all link to the same page
+    # all three link types on the table--Agenda, Minutes,
+    # and View Media--all link to the same page
     def _parse_links(self, item):
         """Parse links."""
         url_first_half = "https://hcjfsonbase.jfs.hamilton-co.org"

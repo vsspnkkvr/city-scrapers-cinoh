@@ -37,7 +37,7 @@ def test_start():
 
 
 def test_end():
-    assert parsed_items[0]["end"] == None
+    assert parsed_items[0]["end"] is None
 
 
 def test_time_notes():
@@ -46,8 +46,8 @@ def test_time_notes():
 
 def test_id():
     assert (
-        parsed_items[0]["id"]
-        == "cinoh_Hamilton_Commission/202501071000/x/commissioners_organizational_meeting"
+        parsed_items[0]["id"] == "cinoh_Hamilton_Commission/202501071000/x/"
+        "commissioners_organizational_meeting"
     )
 
 
@@ -64,8 +64,8 @@ def test_location():
 
 def test_source():
     assert (
-        parsed_items[0]["source"]
-        == "https://hcjfsonbase.jfs.hamilton-co.org/OnBaseAgendaOnline"
+        parsed_items[0]["source"] == "https://hcjfsonbase.jfs.hamilton-co.org/"
+        "OnBaseAgendaOnline"
     )
 
 
@@ -73,7 +73,8 @@ def test_links():
     assert parsed_items[0]["links"] == []
     assert parsed_items[20]["links"] == [
         {
-            "href": "https://hcjfsonbase.jfs.hamilton-co.org/OnBaseAgendaOnline/Meetings/ViewMeeting?id=2597&doctype=1",
+            "href": "https://hcjfsonbase.jfs.hamilton-co.org/OnBaseAgendaOnline/"
+            "Meetings/ViewMeeting?id=2597&doctype=1",
             "title": "Agenda, Notes, and Media",
         }
     ]
