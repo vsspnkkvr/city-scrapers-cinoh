@@ -67,7 +67,8 @@ def test_location():
 def test_source():
     assert (
         parsed_items[0]["source"]
-        == "https://cincinnatioh.legistar.com/DepartmentDetail.aspx?ID=38076&GUID=1CA48415-BFFD-4857-8A93-48AA89BD31C6"
+        == "https://cincinnatioh.legistar.com/DepartmentDetail.aspx"
+        "?ID=38076&GUID=1CA48415-BFFD-4857-8A93-48AA89BD31C6"
     )
 
 
@@ -75,33 +76,40 @@ def test_links():
     assert parsed_items[0]["links"] == [
         {
             "title": "meeting page",
-            "href": "https://cincinnatioh.legistar.com/DepartmentDetail.aspx?ID=38076&GUID=1CA48415-BFFD-4857-8A93-48AA89BD31C6",
+            "href": "https://cincinnatioh.legistar.com/DepartmentDetail"
+            ".aspx?ID=38076&GUID=1CA48415-BFFD-4857-8A93-48AA89BD31C6",
         },
         {
             "title": "iCalendar",
-            "href": "https://cincinnatioh.legistar.com/View.ashx?M=IC&ID=1229949&GUID=40029B38-4ED1-4770-8B4F-E76E6D0FE583",
+            "href": "https://cincinnatioh.legistar.com/View.ashx?M=IC&ID"
+            "=1229949&GUID=40029B38-4ED1-4770-8B4F-E76E6D0FE583",
         },
     ]
     assert parsed_items[8]["links"] == [
         {
             "title": "meeting page",
-            "href": "https://cincinnatioh.legistar.com/DepartmentDetail.aspx?ID=38076&GUID=1CA48415-BFFD-4857-8A93-48AA89BD31C6",
+            "href": "https://cincinnatioh.legistar.com/DepartmentDetail"
+            ".aspx?ID=38076&GUID=1CA48415-BFFD-4857-8A93-48AA89BD31C6",
         },
         {
             "title": "iCalendar",
-            "href": "https://cincinnatioh.legistar.com/View.ashx?M=IC&ID=1235477&GUID=0CC17DD2-8A13-4EC6-A533-F86D41F010D3",
+            "href": "https://cincinnatioh.legistar.com/View.ashx?M=IC&ID"
+            "=1235477&GUID=0CC17DD2-8A13-4EC6-A533-F86D41F010D3",
         },
         {
             "title": "Meeting Details",
-            "href": "https://cincinnatioh.legistar.com/MeetingDetail.aspx?ID=1235477&GUID=0CC17DD2-8A13-4EC6-A533-F86D41F010D3&Options=info|&Search=",
+            "href": "https://cincinnatioh.legistar.com/MeetingDetail.aspx?ID="
+            "1235477&GUID=0CC17DD2-8A13-4EC6-A533-F86D41F010D3&Options=info|&Search=",
         },
         {
             "title": "Agenda",
-            "href": "https://cincinnatioh.legistar.com/View.ashx?M=A&ID=1235477&GUID=0CC17DD2-8A13-4EC6-A533-F86D41F010D3",
+            "href": "https://cincinnatioh.legistar.com/View.ashx?M=A&ID=1235477&GUID="
+            "0CC17DD2-8A13-4EC6-A533-F86D41F010D3",
         },
         {
             "title": "Agenda Packet",
-            "href": "https://cincinnatioh.legistar.com/View.ashx?M=PA&ID=1235477&GUID=0CC17DD2-8A13-4EC6-A533-F86D41F010D3",
+            "href": "https://cincinnatioh.legistar.com/View.ashx?M=PA&ID=1235477&GUID="
+            "0CC17DD2-8A13-4EC6-A533-F86D41F010D3",
         },
     ]
 

@@ -1,7 +1,8 @@
+from datetime import datetime
+
 from city_scrapers_core.constants import CITY_COUNCIL, COMMITTEE
 from city_scrapers_core.items import Meeting
 from city_scrapers_core.spiders import LegistarSpider
-from datetime import datetime
 from dateutil.parser import parse
 
 
@@ -13,9 +14,11 @@ class CinohCityCouncilSpider(LegistarSpider):
 
     def parse_legistar(self, response):
         """
-        Parse upcoming and past meetings from the Cincinnati City Council meetings table.
+        Parse upcoming and past meetings from the
+        Cincinnati City Council meetings table.
 
-        Oftentimes, the columns: meeting details, agenda, minutes, and video are left blank on the calander
+        Oftentimes, the columns: meeting details, agenda,
+        minutes, and video are left blank on the calander
         but when they are, they are in the form of links.
         """
         for obj in response:
